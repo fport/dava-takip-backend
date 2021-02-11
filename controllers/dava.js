@@ -58,7 +58,7 @@ const updateDava = async (req, res) => {
 // @access  Public
 const deleteDava = async (req, res) => {
   try {
-    const removeStudent = await Students.findByIdAndRemove(req.params.id)
+    const removeStudent = await Todo.findByIdAndRemove(req.params.id)
     res.send({ message: 'The student was removed' })
   } catch (err) {
     res.status(400).send({ error: err })
