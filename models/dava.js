@@ -1,8 +1,22 @@
 const mongoose = require('mongoose')
 
 const DavaSchema = new mongoose.Schema({
-  todo: {
-    type: String
+  name: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 33,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  enrollnumber: {
+    type: Number,
+    min: 1,
+    max: 120
   }
 })
 

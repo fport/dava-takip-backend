@@ -1,49 +1,68 @@
 /*eslint-disable*/
 const Todo = require('../models/dava')
 
-const createItem = (req, res) => {
-  const body = req.body
-  console.log(body)
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: 'You must provide an item'
-    })
+// @route   GET /api/dava/
+// @desc    Get all dava
+// @access  Public
+const getDava = async (req, res) => {
+  try {
+    const dava = await Todo.find({})
+    res.send({ dava })
+  } catch (err) {
+    res.status(400).send({ error: err })
   }
-
-  const todo = new Todo(body)
-
-  if (!todo) {
-    return res.status(400).json({ success: false, error: err })
-  }
-
-  todo
-    .save()
-    .then((todo) => {
-      return res.status(200).json({
-        success: true,
-        id: todo._id,
-        message: 'todo item created'
-      })
-    })
-    .catch((error) => {
-      return res.status(400).json({
-        error,
-        message: 'todo item not created'
-      })
-    })
 }
 
-const getTodos = async (req, res) => {
-  await Todo.find({}, (err, todos) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err })
-    }
-    if (!todos.length) {
-      return res.status(404).json({ success: false, error: 'Item not found' })
-    }
-    return res.status(200).json({ success: true, data: todos })
-  }).catch((err) => console.log(err))
+// @route   GET /api/dava/:id
+// @desc    Get a specific dava
+// @access  Public
+const getDavaId = async (req, res) => {
+  try {
+    const student = await Todo.findById(req.params.id)
+    res.send({ student })
+  } catch (err) {
+    res.status(404).send({ message: 'Student not found!' })
+  }
 }
 
-module.exports = { createItem, getTodos }
+// @route   POST /api/dava/
+// @desc    Create a dava
+// @access  Public
+const createDava = async (req, res) => {
+  try {
+    const newDava = await Todo.create({
+      name: req.body.name,
+      email: req.body.email,
+      enrollnumber: req.body.enrollnumber
+    })
+    res.send({ newDava })
+  } catch (err) {
+    res.status(400).send({ error: err })
+  }
+}
+
+// @route   PUT /api/dava/:id
+// @desc    Update a dava
+// @access  Public
+const updateDava = async (req, res) => {
+  try {
+    const updatedStudent = await Todo.findByIdAndUpdate(req.params.id, req.body)
+    res.send({ message: 'The student was updated' })
+  } catch (err) {
+    res.status(400).send({ error: err })
+  }
+}
+
+// @route   DELETE /api/students/:id
+// @desc    Delete a student
+// @access  Public
+const deleteDava = async (req, res) => {
+  try {
+    const removeStudent = await Students.findByIdAndRemove(req.params.id)
+    res.send({ message: 'The student was removed' })
+  } catch (err) {
+    res.status(400).send({ error: err })
+  }
+}
+
+module.exports = { createDava, getDava, getDavaId, updateDava, deleteDava }

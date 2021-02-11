@@ -16,7 +16,7 @@ app.use(express.json())
 // connect route
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/private', require('./routes/private'))
-app.use('/api/todo', require('./routes/dava'))
+app.use('/api/dava', require('./routes/dava'))
 
 // Error Handler (Should be lasat piece of middleware)
 app.use(errorHandler)
