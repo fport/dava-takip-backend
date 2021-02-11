@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
 
-const Todo = new Schema(
-  {
-    todo: { type: String, required: true }
-  },
-  { timestamps: true }
-)
+const DavaSchema = new mongoose.Schema({
+  todo: {
+    type: String
+  }
+})
 
-module.exports = mongoose.model('todos', Todo)
+const Dava = mongoose.model('Dava', DavaSchema)
+
+module.exports = Dava

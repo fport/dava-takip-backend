@@ -3,6 +3,7 @@ const Todo = require('../models/dava')
 
 const createItem = (req, res) => {
   const body = req.body
+  console.log(body)
   if (!body) {
     return res.status(400).json({
       success: false,
@@ -18,7 +19,7 @@ const createItem = (req, res) => {
 
   todo
     .save()
-    .then(() => {
+    .then((todo) => {
       return res.status(200).json({
         success: true,
         id: todo._id,

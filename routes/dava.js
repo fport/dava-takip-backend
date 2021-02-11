@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const { createItem } = require('../controllers/dava')
+const { createItem, getTodos } = require('../controllers/dava')
 
-router.route('/todo').post(createItem)
+router.route('/').post(createItem)
+router.route('/').get(getTodos)
 
 module.exports = router
