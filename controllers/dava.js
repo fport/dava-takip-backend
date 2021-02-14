@@ -1,4 +1,3 @@
-/*eslint-disable*/
 const Todo = require('../models/dava')
 
 // @route   GET /api/dava/
@@ -31,9 +30,13 @@ const getDavaId = async (req, res) => {
 const createDava = async (req, res) => {
   try {
     const newDava = await Todo.create({
+      active: req.body.active,
       name: req.body.name,
-      email: req.body.email,
-      enrollnumber: req.body.enrollnumber
+      designnumber: req.body.designnumber,
+      designname: req.body.designname,
+      productlink: req.body.productlink,
+      vergino: req.body.vergino,
+      adress: req.body.adress
     })
     res.send({ newDava })
   } catch (err) {
@@ -46,7 +49,7 @@ const createDava = async (req, res) => {
 // @access  Public
 const updateDava = async (req, res) => {
   try {
-    const updatedStudent = await Todo.findByIdAndUpdate(req.params.id, req.body)
+    await Todo.findByIdAndUpdate(req.params.id, req.body)
     res.send({ message: 'The student was updated' })
   } catch (err) {
     res.status(400).send({ error: err })
@@ -58,7 +61,7 @@ const updateDava = async (req, res) => {
 // @access  Public
 const deleteDava = async (req, res) => {
   try {
-    const removeStudent = await Todo.findByIdAndRemove(req.params.id)
+    await Todo.findByIdAndRemove(req.params.id)
     res.send({ message: 'The student was removed' })
   } catch (err) {
     res.status(400).send({ error: err })
