@@ -23,6 +23,33 @@ const DavaSchema = new mongoose.Schema({
   },
   adress: {
     type: String
+  },
+  ticarisicil: {
+    type: String
+  },
+  telefonno: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  domainregistrantaddress: {
+    type: String
+  },
+  tpekayitlimarka: {
+    type: String
+  },
+  notlar: {
+    type: String
+  },
+  calinantasarim: {
+    type: String
+  },
+  sergilendigiyer: {
+    type: String
+  },
+  tahminisatis: {
+    type: String
   }
 })
 
