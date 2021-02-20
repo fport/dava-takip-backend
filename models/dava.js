@@ -50,6 +50,9 @@ const DavaSchema = new mongoose.Schema({
   },
   tahminisatis: {
     type: String
+  },
+  social: {
+    type: Array
   }
 })
 

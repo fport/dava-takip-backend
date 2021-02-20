@@ -45,7 +45,8 @@ const createDava = async (req, res) => {
       notlar: req.body.notlar,
       calinantasarim: req.body.calinantasarim,
       sergilendigiyer: req.body.sergilendigiyer,
-      tahminisatis: req.body.tahminisatis
+      tahminisatis: req.body.tahminisatis,
+      social: req.body.social
     })
     res.send({ newDava })
   } catch (err) {
