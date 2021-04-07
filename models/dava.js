@@ -10,7 +10,7 @@ const DavaSchema = new mongoose.Schema({
     trim: true
   },
   designnumber: {
-    type: String
+    type: String,
   },
   designname: {
     type: String

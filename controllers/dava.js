@@ -1,7 +1,7 @@
 const Todo = require('../models/dava')
 const davaRouter = require('express').Router()
 
-davaRouter.get('/', async (req, res) => {
+davaRouter.get('/', async (_req, res) => {
   const dava = await Todo.find({})
   res.send({ dava })
 })
