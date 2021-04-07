@@ -1,48 +1,46 @@
 const User = require('../models/User')
-const ErrorResponse = require('../utils/errorResponse')
+const authRouter = require('express').Router()
 
-exports.register = async (req, res, next) => {
+authRouter.post('/register', async (req, res) => {
   const { username, email, password } = req.body
+  const user = await User.create({
+    username,
+    email,
+    password
+  })
 
-  try {
-    const user = await User.create({
-      username,
-      email,
-      password
-    })
+  sendToken(user, 201, res)
+})
 
-    sendToken(user, 201, res)
-  } catch (error) {
-    next(error)
-  }
-}
-
-exports.login = async (req, res, next) => {
+authRouter.post('/login', async (req, res) => {
   const { email, password } = req.body
 
-  if (!email || !password) {
-    return next(new ErrorResponse('Please provide an email and password', 401))
-  }
+  if (!email || !password)
+    return res.status(401).json({
+      error: 'Please provide an email and password'
+    })
 
-  try {
-    const user = await User.findOne({ email }).select('+password')
+  const user = await User.findOne({ email }).select('+password')
 
-    if (!user) {
-      return next(new ErrorResponse('Invalid Credentials', 401))
-    }
+  if (!user)
+    return res.status(401).json({
+      error: 'Invalid Credentials'
+    })
 
-    const isMatch = await user.matchPasswords(password)
-    if (!isMatch) {
-      res.status(404).json({ success: false, error: 'Invalid credentials' })
-    }
+  const isMatch = await user.matchPasswords(password)
 
-    sendToken(user, 200, res)
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message })
-  }
-}
+  if (!isMatch)
+    return res.status(404).json({
+      success: false,
+      error: 'Invalid Credentials'
+    })
+
+  sendToken(user, 200, res)
+})
 
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken()
   res.status(statusCode).json({ success: true, token })
 }
+
+module.exports = authRouter
