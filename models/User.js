@@ -2,11 +2,13 @@ const crypto = require('crypto')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, 'Please provide a username']
+    required: [true, 'Please provide a username'],
+    unique: true
   },
   email: {
     type: String,
@@ -14,17 +16,20 @@ const UserSchema = new mongoose.Schema({
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       'Please provide a email'
-    ]
+    ],
+    unique: true
   },
   password: {
     type: String,
     required: [true, 'Please add a password'],
-    minLength: 6,
+    minLength: [6, 'password is too short'],
     select: false
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date
 })
+
+UserSchema.plugin(uniqueValidator)
 
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
@@ -55,6 +60,4 @@ UserSchema.methods.getResetPasswordToken = function () {
   return resetToken
 }
 
-const User = mongoose.model('User', UserSchema)
-
-module.exports = User
+module.exports = mongoose.model('User', UserSchema)

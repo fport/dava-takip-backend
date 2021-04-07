@@ -56,6 +56,4 @@ const DavaSchema = new mongoose.Schema({
   }
 })
 
-const Dava = mongoose.model('Dava', DavaSchema)
-
-module.exports = Dava
+module.exports = mongoose.model('Dava', DavaSchema)
