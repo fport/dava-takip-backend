@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const User = require('../models/user')
 const authRouter = require('express').Router()
 
 authRouter.post('/register', async (req, res) => {
